@@ -1,11 +1,4 @@
 #include <gtest/gtest.h>
-#include <tmp/tmp.hpp>
-
-TEST(Placeholder, AlwaysPass)
-{
-  ASSERT_EQ(2,2);
-  EXPECT_TRUE(true);
-}
 
 int main(int argc, char **argv)
 {

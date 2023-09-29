@@ -4,7 +4,7 @@ option(BUILD_EXECUTABLE     "Build the project as an executable."             OF
 option(BUILD_HEADERS_ONLY   "Build the project as a header-only library."     OFF)
 
 # Unit testing using GoogleTest and GoogleMock
-option(ENABLE_UNIT_TESTING  "Enable unit tests for the projects."             ON)
+option(ENABLE_UNIT_TESTING  "Enable unit tests for the projects."             OFF)
 
 # Doxygen
 option(ENABLE_DOXYGEN       "Enable Doxygen documentation builds of source."  OFF)
