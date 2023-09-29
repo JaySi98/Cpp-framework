@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.15 FATAL_ERROR)
 
 project(
-    "Template" 
+    "Cpp-framework" 
     VERSION 0.1.0 
     LANGUAGES CXX
 )
