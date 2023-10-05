@@ -10,13 +10,8 @@
 int main(int argc, char** argv) 
 {
     cpf::logs::logger m_logger;
+    LOG_MESSAGE_HINT << "dupa";
 
-    // std::cout << "start" << std::endl;
-    // std::cout << __FILE__ << std::endl;
-    // std::cout << __LINE__ << std::endl;
-    // std::cout << __func__ << std::endl;
-
-    LOG_MESSAGE_HINT("dupa");
 
     // std::atomic<bool> refresh_ui_continue = true;
     // std::thread refresh_ui([&] 

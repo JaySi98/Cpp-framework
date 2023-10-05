@@ -6,19 +6,16 @@ namespace cpf::logs
 {
     class logger
     {
-        public:
+    public:
         logger(); //std::filesystem::path
-        static void write_log_message(log_message message);
 
-        private:
+    private:
     };
 }
 
-#define LOG_MESSAGE_HINT(text)     cpf::logs::log_message(__FILE__, __func__, __LINE__, text, cpf::logs::log_message_type::hint);
-// #define LOG_MESSAGE_HINT(text)     cpf::logs::logger.write_log_message(cpf::logs::log_message(__FILE__, __func__, __LINE__, text, cpf::logs::log_message_type::hint));
-
-#define LOG_MESSAGE_INFO(text)     cpf::logs::logger.write_log_message(cpf::logs::log_message(__FILE__, __func__, __LINE__, text, cpf::logs::log_message_type::information));
-#define LOG_MESSAGE_WARNING(text)  cpf::logs::logger.write_log_message(cpf::logs::log_message(__FILE__, __func__, __LINE__, text, cpf::logs::log_message_type::warning));
-#define LOG_MESSAGE_CAUTION(text)  cpf::logs::logger.write_log_message(cpf::logs::log_message(__FILE__, __func__, __LINE__, text, cpf::logs::log_message_type::caution));
-#define LOG_MESSAGE_ERROR(text)    cpf::logs::logger.write_log_message(cpf::logs::log_message(__FILE__, __func__, __LINE__, text, cpf::logs::log_message_type::error));
-#define LOG_MESSAGE_FATAL(text)    cpf::logs::logger.write_log_message(cpf::logs::log_message(__FILE__, __func__, __LINE__, text, cpf::logs::log_message_type::fatal));
+#define LOG_MESSAGE_HINT    cpf::logs::log_message(__FILE__, __func__, __LINE__, cpf::logs::log_message_type::hint)
+#define LOG_MESSAGE_INFO    cpf::logs::log_message(__FILE__, __func__, __LINE__, cpf::logs::log_message_type::information)
+#define LOG_MESSAGE_WARNING cpf::logs::log_message(__FILE__, __func__, __LINE__, cpf::logs::log_message_type::warning)
+#define LOG_MESSAGE_CAUTION cpf::logs::log_message(__FILE__, __func__, __LINE__, cpf::logs::log_message_type::caution)
+#define LOG_MESSAGE_ERROR   cpf::logs::log_message(__FILE__, __func__, __LINE__, cpf::logs::log_message_type::error)
+#define LOG_MESSAGE_FATAL   cpf::logs::log_message(__FILE__, __func__, __LINE__, cpf::logs::log_message_type::fatal)
