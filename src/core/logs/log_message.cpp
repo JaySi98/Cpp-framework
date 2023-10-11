@@ -1,28 +1,38 @@
 #include <core/logs/log_message.hpp>
 
+#include <boost/signals2.hpp>
+#include <boost/signals2/connection.hpp>
+
+#include <core/logs/log_interface.hpp>
+
+namespace {
+    boost::signals2::signal<void(const cpf::logs::log_data&)> signal_log;
+}
+
 namespace cpf::logs 
 {
-    log_message_data::log_message_data(
-            std::filesystem::path file_,
-            std::string function_,
-            int line_,
-            log_message_type type_,
-            int thread_id
-    ) : file(file_), function(function_), line(line_), type(type_), thread(thread_id), message("") 
+    // from log_interface.hpp
+    boost::signals2::connection listen_logs(std::function<void(const log_data&)> slot)
     {
+        return signal_log.connect(std::move(slot));
     }
 
     log_message::log_message(
         const char* file,
         const char* function,
         int line,
-        log_message_type type,
+        log_type type,
         int thread_id
     ) : data(file, function, line, type, thread_id)
+    {}
+
+    log_message::~log_message()
     {
+        // send new log entry to listeners
+        signal_log(data);
     }
 
-    log_message_data log_message::get_data() 
+    const log_data& log_message::get_data() 
     {
         return data;
     }
@@ -30,9 +40,7 @@ namespace cpf::logs
     log_message& log_message::operator<<(std::string&& message)
     {
         // TODO
-        // change to template function so that it is possible to add other types
         data.message = std::forward<std::string>(message);
-
         return *this;
     }
 };

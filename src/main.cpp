@@ -5,11 +5,18 @@
 #include <iostream>
 #include <type_traits>
 
-#include <core/logs/logger.hpp>
+#include <core/logs/log_interface.hpp>
+#include <core/logs/log_message.hpp>
+
 
 int main(int argc, char** argv) 
 {
-    cpf::logs::logger m_logger;
+    cpf::logs::listen_logs([&](const cpf::logs::log_data& data)
+    {
+        std::cout << "main listener: ";
+        std::cout << data.line << " | " << data.message << std::endl;
+    });
+
     LOG_MESSAGE_HINT << "dupa";
 
 

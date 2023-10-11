@@ -1,21 +1,35 @@
 #pragma once
 
-#include <core/logs/log_message.hpp>
+/*
+-------------- CPF - Jakub Szkiłądź September 2023 --------------
+component: core/logs
+file: logger.hpp
+description:
+    class that writes logs to specified file and console     
+-----------------------------------------------------------------
+*/
 
-namespace cpf::logs 
+#include <memory>
+#include <thread>
+#include <sstream>
+
+#include <core/logs/log_interface.hpp>
+#include <core/logs/log_message.hpp>
+#include <core/logs/logger_config.hpp>
+
+namespace cpf::logs
 {
-    class logger
+    class logger //: public std::enable_shared_from_this<logger>
     {
     public:
-        logger(); //std::filesystem::path
+        logger(const logger_config& config);
+        ~logger();
 
     private:
+        void write_log(const log_data& data);
+
+        std::thread thread;
+        std::filesystem::path directory;
+        boost::signals2::connection log_connection;
     };
 }
-
-#define LOG_MESSAGE_HINT    cpf::logs::log_message(__FILE__, __func__, __LINE__, cpf::logs::log_message_type::hint)
-#define LOG_MESSAGE_INFO    cpf::logs::log_message(__FILE__, __func__, __LINE__, cpf::logs::log_message_type::information)
-#define LOG_MESSAGE_WARNING cpf::logs::log_message(__FILE__, __func__, __LINE__, cpf::logs::log_message_type::warning)
-#define LOG_MESSAGE_CAUTION cpf::logs::log_message(__FILE__, __func__, __LINE__, cpf::logs::log_message_type::caution)
-#define LOG_MESSAGE_ERROR   cpf::logs::log_message(__FILE__, __func__, __LINE__, cpf::logs::log_message_type::error)
-#define LOG_MESSAGE_FATAL   cpf::logs::log_message(__FILE__, __func__, __LINE__, cpf::logs::log_message_type::fatal)
