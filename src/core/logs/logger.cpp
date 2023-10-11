@@ -2,6 +2,7 @@
 
 //temp
 #include <iostream>
+#include <core/utility/weak_function.hpp>
 
 namespace cpf::logs 
 {

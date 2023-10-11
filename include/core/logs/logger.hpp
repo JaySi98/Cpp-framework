@@ -19,7 +19,7 @@ description:
 
 namespace cpf::logs
 {
-    class logger //: public std::enable_shared_from_this<logger>
+    class logger
     {
     public:
         logger(const logger_config& config);

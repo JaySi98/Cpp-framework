@@ -7,10 +7,22 @@
 
 #include <core/logs/log_interface.hpp>
 #include <core/logs/log_message.hpp>
+#include <core/logs/logger.hpp>
 
+#include <boost/version.hpp>
 
 int main(int argc, char** argv) 
 {
+
+    std::cout << "Using Boost "     
+          << BOOST_VERSION / 100000     << "."  // major version
+          << BOOST_VERSION / 100 % 1000 << "."  // minor version
+          << BOOST_VERSION % 100                // patch level
+          << std::endl;
+
+    cpf::logs::logger_config config{"."};
+    cpf::logs::logger logger(config);
+
     cpf::logs::listen_logs([&](const cpf::logs::log_data& data)
     {
         std::cout << "main listener: ";
