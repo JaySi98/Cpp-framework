@@ -1,22 +1,24 @@
 #include <core/logs/log_data.hpp>
-#include <map>
+#include <core/utility/type_literal_map.hpp>
 
 namespace cpf::logs 
 {
+    static constexpr std::array<std::pair<log_type, std::string_view>, 6> literals
+    {{
+        {log_type::hint,          "HINT"},
+        {log_type::information,   "INFO"},
+        {log_type::warning,       "WARN"},
+        {log_type::caution,       "CAUTION"},
+        {log_type::error,         "ERROR"},
+        {log_type::fatal,         "FATAL"}
+    }};
 
     const std::string_view log_type_literal(log_type type)
     {
-        static std::map<log_type, const char*> map
-        {
-            {log_type::hint,          "HINT"},
-            {log_type::information,   "INFO"},
-            {log_type::warning,       "WARN"},
-            {log_type::caution,       "CAUTION"},
-            {log_type::error,         "ERROR"},
-            {log_type::fatal,         "FATAL"}
-        };
+        static constexpr auto map = 
+            utility::type_literal_map<log_type, std::string_view, literals.size()>{{literals}};
 
-        return std::string_view{map[type]};
+        return map.at(type);
     }
 
     log_data::log_data(

@@ -41,12 +41,6 @@ int main(/*int argc, char** argv*/)
     LOG_MESSAGE_INFO << "some info";
     LOG_MESSAGE_WARNING << "some warning";
 
-    // std::ostringstream stream{put(std::put_time(std::localtime(&t_now), "%F %T"))};
-    // std::cout << stream.str() << std::endl;
-    // std::cout << std::put_time(std::localtime(&t_now), "{0:%F}T{0:%R%z}") << std::endl;
-    // std::cout << std::put_time(std::localtime(&t_now), "%F %T") << std::endl;
-    
-
     // threaded loop example
     // std::atomic<bool> refresh_ui_continue = true;
     // std::thread refresh_ui([&] 

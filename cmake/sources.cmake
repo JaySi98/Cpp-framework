@@ -7,6 +7,7 @@ set(HEADERS
 
     include/core/utility/weak_function.hpp
     include/core/utility/time.hpp
+    include/core/utility/type_literal_map.hpp
 )
 
 set(SOURCES
