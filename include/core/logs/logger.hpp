@@ -27,6 +27,7 @@ namespace cpf::logs
 
     private:
         void write_log(const log_data& data);
+        std::ostringstream create_log_entry(const log_data& data);
 
         std::thread thread;
         std::filesystem::path directory;

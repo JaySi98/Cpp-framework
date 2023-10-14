@@ -6,12 +6,15 @@ set(HEADERS
     include/core/logs/log_interface.hpp
 
     include/core/utility/weak_function.hpp
+    include/core/utility/time.hpp
 )
 
 set(SOURCES
     src/core/logs/log_data.cpp
     src/core/logs/log_message.cpp
     src/core/logs/logger.cpp
+
+    src/core/utility/time.cpp
 )
 
 set(EXE_SOURCES

@@ -28,19 +28,11 @@ namespace cpf::logs
 
     log_message::~log_message()
     {
-        // send new log entry to listeners
         signal_log(data);
     }
 
     const log_data& log_message::get_data() 
     {
         return data;
-    }
-        
-    log_message& log_message::operator<<(std::string&& message)
-    {
-        // TODO
-        data.message = std::forward<std::string>(message);
-        return *this;
     }
 };

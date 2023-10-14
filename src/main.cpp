@@ -10,28 +10,44 @@
 #include <core/logs/logger.hpp>
 
 #include <boost/version.hpp>
+#include <core/utility/time.hpp>
 
-int main(int argc, char** argv) 
+template<typename T>
+std::ostringstream put(T&& message)
 {
+    std::ostringstream output{};
+    output << std::move(message);
+    return output;
+}
 
-    std::cout << "Using Boost "     
-          << BOOST_VERSION / 100000     << "."  // major version
-          << BOOST_VERSION / 100 % 1000 << "."  // minor version
-          << BOOST_VERSION % 100                // patch level
-          << std::endl;
 
+int main(/*int argc, char** argv*/) 
+{
+    // current boost version
+    // std::cout << "Using Boost "     
+    //       << BOOST_VERSION / 100000     << "."  // major version
+    //       << BOOST_VERSION / 100 % 1000 << "."  // minor version
+    //       << BOOST_VERSION % 100                // patch level
+    //       << std::endl;
+
+    // logs
     cpf::logs::logger_config config{"."};
     cpf::logs::logger logger(config);
 
-    cpf::logs::listen_logs([&](const cpf::logs::log_data& data)
-    {
-        std::cout << "main listener: ";
-        std::cout << data.line << " | " << data.message << std::endl;
-    });
+    LOG_MESSAGE_CAUTION << "some caution";
+    LOG_MESSAGE_ERROR << "some error";
+    LOG_MESSAGE_FATAL << "some fatal";
+    LOG_MESSAGE_HINT << "some hint";
+    LOG_MESSAGE_INFO << "some info";
+    LOG_MESSAGE_WARNING << "some warning";
 
-    LOG_MESSAGE_HINT << "dupa";
+    // std::ostringstream stream{put(std::put_time(std::localtime(&t_now), "%F %T"))};
+    // std::cout << stream.str() << std::endl;
+    // std::cout << std::put_time(std::localtime(&t_now), "{0:%F}T{0:%R%z}") << std::endl;
+    // std::cout << std::put_time(std::localtime(&t_now), "%F %T") << std::endl;
+    
 
-
+    // threaded loop example
     // std::atomic<bool> refresh_ui_continue = true;
     // std::thread refresh_ui([&] 
     // {

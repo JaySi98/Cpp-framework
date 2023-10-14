@@ -28,7 +28,13 @@ namespace cpf::logs
         ~log_message();
 
         const log_data& get_data();
-        log_message& operator<<(std::string&& message);
+
+        template<typename T>
+        log_message& operator<<(T&& message)
+        {
+            data.message << std::move(message);
+            return *this;
+        }
 
     private:
         log_data data;

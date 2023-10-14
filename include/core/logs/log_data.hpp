@@ -28,11 +28,13 @@ namespace cpf::logs
         fatal
     };
 
+    const std::string_view log_type_literal(log_type type);
+
     struct log_data 
     {
         explicit log_data(
-            std::filesystem::path file_,
-            std::string function_,
+            const std::filesystem::path& file_,
+            const std::string& function_,
             int line_,
             log_type type_,
             int thread_id
@@ -43,6 +45,6 @@ namespace cpf::logs
         int line;
         log_type type;
         int thread;
-        std::string message{};
+        std::ostringstream message{};
     };
 };
