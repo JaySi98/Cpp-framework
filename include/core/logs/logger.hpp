@@ -12,10 +12,12 @@ description:
 #include <memory>
 #include <thread>
 #include <sstream>
+#include <set>
 
 #include <core/logs/log_interface.hpp>
 #include <core/logs/log_message.hpp>
 #include <core/logs/logger_config.hpp>
+#include <core/logs/log_file.hpp>
 
 namespace cpf::logs
 {
@@ -25,12 +27,17 @@ namespace cpf::logs
         logger(const logger_config& config);
         ~logger();
 
+        void block_log_type(const log_type& type);
+        void clear_blocked();
+
     private:
         void write_log(const log_data& data);
         std::ostringstream create_log_entry(const log_data& data);
 
+        logger_config config;
+        log_file file;
+        std::set<log_type> blocked_logs;
         std::thread thread;
-        std::filesystem::path directory;
         boost::signals2::connection log_connection;
     };
 }

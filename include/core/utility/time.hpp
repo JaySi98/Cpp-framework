@@ -14,5 +14,5 @@ description:
 
 namespace cpf::utility
 {
-    std::ostringstream current_time_as_stream(const char* format);
+    std::string current_time_as_str(const std::string& format);
 };

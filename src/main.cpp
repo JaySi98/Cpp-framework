@@ -9,64 +9,62 @@
 #include <core/logs/log_message.hpp>
 #include <core/logs/logger.hpp>
 
+//temp
 #include <boost/version.hpp>
 #include <core/utility/time.hpp>
+#include <filesystem>
+#include <fstream>
+#include <iostream>
 
-template<typename T>
-std::ostringstream put(T&& message)
+void print(const cpf::logs::log_data& data)
 {
-    std::ostringstream output{};
-    output << std::move(message);
-    return output;
+    std::cout << "print: " << std::this_thread::get_id() << " "<< data.message.str() << "\n"; 
 }
-
 
 int main(/*int argc, char** argv*/) 
 {
     // current boost version
-    // std::cout << "Using Boost "     
-    //       << BOOST_VERSION / 100000     << "."  // major version
-    //       << BOOST_VERSION / 100 % 1000 << "."  // minor version
-    //       << BOOST_VERSION % 100                // patch level
-    //       << std::endl;
+    std::cout << "Using Boost "     
+        << BOOST_VERSION / 100000     << "."  // major version
+        << BOOST_VERSION / 100 % 1000 << "."  // minor version
+        << BOOST_VERSION % 100                // patch level
+        << std::endl;
 
     // logs
-    cpf::logs::logger_config config{"."};
+    cpf::logs::logger_config config;
+    config.base_dir = "./build/logs";
+    config.to_file = false;
     cpf::logs::logger logger(config);
+    logger.block_log_type(cpf::logs::log_type::hint);
 
-    LOG_MESSAGE_CAUTION << "some caution";
-    LOG_MESSAGE_ERROR << "some error";
-    LOG_MESSAGE_FATAL << "some fatal";
-    LOG_MESSAGE_HINT << "some hint";
-    LOG_MESSAGE_INFO << "some info";
-    LOG_MESSAGE_WARNING << "some warning";
 
-    // threaded loop example
-    // std::atomic<bool> refresh_ui_continue = true;
-    // std::thread refresh_ui([&] 
-    // {
-    //     while (refresh_ui_continue) 
-    //     {
-    //         using namespace std::chrono_literals;
-    //         std::this_thread::sleep_for(1s); // 0.05s
+    // test threaded loop
+    std::atomic<bool> refresh_ui_continue = true;
+    std::thread refresh_ui([&] 
+    {
+        while (refresh_ui_continue) 
+        {
+            using namespace std::chrono_literals;
+            std::this_thread::sleep_for(1s); // 0.05s
 
-    //         std::cout << "Hello World!" << std::endl;
-    //     }
-    // });
+            LOG_MESSAGE_INFO << "Hello INFO!";
+            LOG_MESSAGE_HINT << "Hello INFO!";
+        }
+    });
 
-    // std::thread user_input([&] 
-    // {
-    //     while (refresh_ui_continue) 
-    //     {
-    //         std::string str{};
-    //         std::cin >> str;
-    //         if(str == "stop")
-    //             refresh_ui_continue = false;
-    //     }
-    // });
+    std::thread user_input([&] 
+    {
+        while (refresh_ui_continue) 
+        {
+            std::string str{};
+            std::cin >> str;
+            if(str == "s")
+                refresh_ui_continue = false;
+        }
+    });
 
-    // refresh_ui.join();
-    // user_input.join();
+    refresh_ui.join();
+    user_input.join();
 
     return EXIT_SUCCESS;
 }

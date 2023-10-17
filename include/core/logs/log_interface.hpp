@@ -19,5 +19,4 @@ description:
 namespace cpf::logs 
 {
     boost::signals2::connection listen_logs(std::function<void(const log_data&)> slot);
-
 }
