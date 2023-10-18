@@ -2,6 +2,7 @@
 #include <core/utility/time.hpp>
 
 #include <iostream>
+#include <functional>
 
 namespace cpf::logs
 {
@@ -9,13 +10,16 @@ namespace cpf::logs
     : config(config_)
     , file(config)
     , blocked_logs()
-    {   
-        log_connection = listen_logs([&](const log_data& data)
-        {
-            this->write_log(data);
-        });
+    {
+        using namespace std::placeholders;  // for _1
+        log_connection = listen_logs(std::bind(&logger::write_log, this, _1));
 
-        LOG_MESSAGE_INFO << "STARTING LOGGING SESSION";        
+        LOG_MESSAGE_INFO << "STARTING LOGGING SESSION";
+    }
+
+    logger::~logger()
+    {
+        LOG_MESSAGE_INFO << "ENDING LOGGING SESSION";
     }
 
     void logger::write_log(const log_data& data)
@@ -56,13 +60,5 @@ namespace cpf::logs
     void logger::clear_blocked()
     {
         blocked_logs.clear();
-    }
-
-    logger::~logger()
-    {
-        LOG_MESSAGE_INFO << "ENDING LOGGING SESSION";
-
-        if(thread.joinable())
-            thread.join();
     }
 }

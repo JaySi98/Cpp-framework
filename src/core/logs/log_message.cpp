@@ -1,9 +1,8 @@
 #include <core/logs/log_message.hpp>
+#include <core/logs/log_interface.hpp>
 
 #include <boost/signals2.hpp>
 #include <boost/signals2/connection.hpp>
-
-#include <core/logs/log_interface.hpp>
 
 namespace {
     boost::signals2::signal<void(const cpf::logs::log_data&)> signal_log;

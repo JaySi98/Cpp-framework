@@ -16,30 +16,47 @@
 #include <fstream>
 #include <iostream>
 
-void print(const cpf::logs::log_data& data)
+void start_log(std::atomic<bool>& refresh_ui_continue)
 {
-    std::cout << "print: " << std::this_thread::get_id() << " "<< data.message.str() << "\n"; 
+    cpf::logs::logger_config config;
+    config.base_dir = "./build/logs";
+    config.to_file = false;
+    config.to_console = true;
+    
+    cpf::logs::logger logger(config);
+    logger.block_log_type(cpf::logs::log_type::hint);
+
+    while (refresh_ui_continue) 
+    {
+    }
 }
 
 int main(/*int argc, char** argv*/) 
 {
     // current boost version
-    std::cout << "Using Boost "     
+    std::cout << "BOOST VERSION: "     
         << BOOST_VERSION / 100000     << "."  // major version
         << BOOST_VERSION / 100 % 1000 << "."  // minor version
         << BOOST_VERSION % 100                // patch level
-        << std::endl;
+        << '\n';
+    std::cout << "MAIN THREAD: "<< std::this_thread::get_id() << '\n';
 
     // logs
-    cpf::logs::logger_config config;
-    config.base_dir = "./build/logs";
-    config.to_file = false;
-    cpf::logs::logger logger(config);
-    logger.block_log_type(cpf::logs::log_type::hint);
+    // cpf::logs::logger_config config;
+    // config.base_dir = "./build/logs";
+    // config.to_file = false;
+    // cpf::logs::logger logger(config);
+    // logger.block_log_type(cpf::logs::log_type::hint);
+
+    // using namespace std::chrono_literals;
+    // std::this_thread::sleep_for(1s);
+    // LOG_MESSAGE_INFO << "TEST LOG";
 
 
     // test threaded loop
     std::atomic<bool> refresh_ui_continue = true;
+
+    std::thread log_thread(start_log, std::ref(refresh_ui_continue));
     std::thread refresh_ui([&] 
     {
         while (refresh_ui_continue) 
@@ -65,6 +82,7 @@ int main(/*int argc, char** argv*/)
 
     refresh_ui.join();
     user_input.join();
+    log_thread.join();
 
     return EXIT_SUCCESS;
 }

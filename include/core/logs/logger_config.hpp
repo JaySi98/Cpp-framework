@@ -5,7 +5,7 @@
 component: core/logs
 file: logger_config.hpp
 description:
-    Struct used to initialize logger class     
+    Struct used to initialize logger class
 -----------------------------------------------------------------
 */
 

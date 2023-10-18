@@ -10,7 +10,6 @@ description:
 */
 
 #include <memory>
-#include <thread>
 #include <sstream>
 #include <set>
 
@@ -37,7 +36,6 @@ namespace cpf::logs
         logger_config config;
         log_file file;
         std::set<log_type> blocked_logs;
-        std::thread thread;
         boost::signals2::connection log_connection;
     };
 }
