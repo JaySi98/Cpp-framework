@@ -21,13 +21,10 @@ namespace cpf::logs
     {
         if(fs::exists(config.base_dir))
         {
-            auto name = config.file_name.string() + ".log";
-            file = std::ofstream{config.base_dir/name};
-            std::cout << "file: " << config.base_dir/config.file_name << std::endl;
+            file = std::ofstream{config.base_dir/config.file_name};
         }
         else
         {
-            std::cout <<  config.base_dir << " doesn't exists, creating directory" << std::endl;
             fs::create_directory(config.base_dir);
         }
     }

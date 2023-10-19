@@ -20,9 +20,7 @@ void start_log(std::atomic<bool>& refresh_ui_continue)
 {
     cpf::logs::logger_config config;
     config.base_dir = "./build/logs";
-    config.to_file = false;
-    config.to_console = true;
-    
+
     cpf::logs::logger logger(config);
     logger.block_log_type(cpf::logs::log_type::hint);
 
@@ -40,18 +38,6 @@ int main(/*int argc, char** argv*/)
         << BOOST_VERSION % 100                // patch level
         << '\n';
     std::cout << "MAIN THREAD: "<< std::this_thread::get_id() << '\n';
-
-    // logs
-    // cpf::logs::logger_config config;
-    // config.base_dir = "./build/logs";
-    // config.to_file = false;
-    // cpf::logs::logger logger(config);
-    // logger.block_log_type(cpf::logs::log_type::hint);
-
-    // using namespace std::chrono_literals;
-    // std::this_thread::sleep_for(1s);
-    // LOG_MESSAGE_INFO << "TEST LOG";
-
 
     // test threaded loop
     std::atomic<bool> refresh_ui_continue = true;
