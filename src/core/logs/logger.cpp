@@ -10,12 +10,12 @@ namespace cpf::logs
     : base_logger(config_)
     , file(config_)
     {
-        LOG_MESSAGE_INFO << "STARTING LOGGING SESSION";
+        LOG_MESSAGE_INFO << "\nSTARTING LOGGING SESSION";
     }
 
     logger::~logger()
     {
-        LOG_MESSAGE_INFO << "ENDING LOGGING SESSION";
+        LOG_MESSAGE_INFO << "ENDING LOGGING SESSION\n";
     }
 
     void logger::write_log(const log_data& data)

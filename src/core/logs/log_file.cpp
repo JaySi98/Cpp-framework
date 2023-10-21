@@ -2,10 +2,13 @@
 
 namespace cpf::logs
 {
+    constexpr auto log_ext{".log"};
+    constexpr auto date_format{"%F"};
+
     log_file::log_file(const logger_config& config_)
-    : config(config_)
+    : file_path(config.base_dir/config.file_name)
     {
-        create_file();
+        manage_files(config_);
     }
 
     log_file::~log_file()
@@ -17,20 +20,35 @@ namespace cpf::logs
         }
     }
 
-    void log_file::create_file()
+    void log_file::manage_files(const logger_config& config_)
     {
-        if(fs::exists(config.base_dir))
+        // create log file dir if it doesn't exist
+        if(!fs::exists(config_.base_dir))
         {
-            file = std::ofstream{config.base_dir/config.file_name};
+            fs::create_directory(base_dir);
+        }
+                
+        if(config_.append)
+        {
+            // find newest file and open it
+            
+            // TODO
         }
         else
         {
-            fs::create_directory(config.base_dir);
+            // create new file            
+            
+            const auto date = current_time_as_str(date_format);
+            // TODO
+            file = std::ofstream{file_path};
         }
     }
 
     void log_file::write_log(const std::ostringstream& entry)
     {
-        file << entry.str() << '\n';
+        if(file.is_open())
+        {
+            file << entry.str() << '\n';
+        }
     }
 }

@@ -17,10 +17,11 @@ namespace cpf::logs
     struct logger_config
     {
         std::filesystem::path base_dir{"/var/log/cpf"};
-        std::filesystem::path file_name{"session.log"};
+        std::filesystem::path file_name{"session"};
         std::string time_format{"%F %T"};
 
-        bool new_file = false;  // logger will not create new file 
+        bool append = true;     // logger will not create new file
                                 // but will continue to write to the newest in the folder
+        int files_to_keep = 10; // number of log files to be kept
     };
 }

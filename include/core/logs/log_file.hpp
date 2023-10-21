@@ -27,12 +27,15 @@ namespace cpf::logs
     public:
         log_file(const logger_config& config);
         ~log_file();
+
         void write_log(const std::ostringstream& entry);
+        void close_file();
+        void open_file(const std::filesystem::path& file_name);
 
     private:
-        void create_file();
+        void manage_files(bool append);
 
-        logger_config config;
+        std::filesystem::path file_path;
         std::ofstream file;
     };
 }
