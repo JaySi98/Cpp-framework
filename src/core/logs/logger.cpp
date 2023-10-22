@@ -10,7 +10,7 @@ namespace cpf::logs
     : base_logger(config_)
     , file(config_)
     {
-        LOG_MESSAGE_INFO << "\nSTARTING LOGGING SESSION";
+        LOG_MESSAGE_INFO << "STARTING LOGGING SESSION";
     }
 
     logger::~logger()

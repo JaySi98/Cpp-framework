@@ -1,4 +1,5 @@
 #include <core/logs/log_file.hpp>
+#include <core/utility/time.hpp>
 
 namespace cpf::logs
 {
@@ -6,7 +7,7 @@ namespace cpf::logs
     constexpr auto date_format{"%F"};
 
     log_file::log_file(const logger_config& config_)
-    : file_path(config.base_dir/config.file_name)
+    : file_path(config_.base_dir/config_.file_name)
     {
         manage_files(config_);
     }
@@ -25,7 +26,7 @@ namespace cpf::logs
         // create log file dir if it doesn't exist
         if(!fs::exists(config_.base_dir))
         {
-            fs::create_directory(base_dir);
+            fs::create_directory(config_.base_dir);
         }
                 
         if(config_.append)
@@ -38,7 +39,7 @@ namespace cpf::logs
         {
             // create new file            
             
-            const auto date = current_time_as_str(date_format);
+            const auto date = utility::current_time_as_str(date_format);
             // TODO
             file = std::ofstream{file_path};
         }

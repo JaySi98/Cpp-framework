@@ -33,7 +33,7 @@ namespace cpf::logs
         void open_file(const std::filesystem::path& file_name);
 
     private:
-        void manage_files(bool append);
+        void manage_files(const logger_config& config_);
 
         std::filesystem::path file_path;
         std::ofstream file;
