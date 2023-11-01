@@ -28,16 +28,16 @@ if(NOT CMAKE_BUILD_TYPE)
 endif()
 message(STATUS "Started CMake for ${PROJECT_NAME} v${PROJECT_VERSION}...\n")
 
-# Set the compiler standard to C++17
-set(CMAKE_CXX_STANDARD 17)
+# Set the compiler standard to C++20
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 if(MSVC_VERSION GREATER_EQUAL "1900" AND CMAKE_VERSION LESS 3.10)
     include(CheckCXXCompilerFlag)
-    check_cxx_compiler_flag("/std:c++17" _cpp_latest_flag_supported)
+    check_cxx_compiler_flag("/std:c++20" _cpp_latest_flag_supported)
     if(_cpp_latest_flag_supported)
-        add_compile_options("/std:c++17")
+        add_compile_options("/std:c++20")
     endif()
 endif()
 
