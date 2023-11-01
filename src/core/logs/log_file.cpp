@@ -7,6 +7,8 @@
 
 namespace
 {
+    namespace fs = std::filesystem;
+
     constexpr auto log_ext{".log"};
     constexpr auto date_format{"%F"};
 

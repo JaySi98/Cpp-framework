@@ -18,8 +18,6 @@ description:
 #include <core/logs/log_message.hpp>
 #include <core/logs/logger_config.hpp>
 
-namespace fs = std::filesystem;
-
 namespace cpf::logs
 {
     class log_file 
@@ -29,7 +27,7 @@ namespace cpf::logs
         ~log_file();
 
         void write_log(const std::ostringstream& entry);
-            
+
     private:
         void manage_files(const logger_config& config_);
 
