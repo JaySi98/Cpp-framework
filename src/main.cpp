@@ -4,62 +4,17 @@
 #include <thread>
 #include <iostream>
 #include <type_traits>
+#include <filesystem>
+#include <fstream>
 
 #include <core/logs/log_interface.hpp>
 #include <core/logs/log_message.hpp>
 #include <core/logs/logger.hpp>
 
 //temp
-#include <boost/version.hpp>
+#include <core/thread/thread.hpp>
 #include <core/utility/time.hpp>
-#include <filesystem>
-#include <fstream>
-#include <iostream>
-
-// temp ---------------------------------------------------------- //
-class thread_loop 
-{
-public:
-    thread_loop(cpf::logs::logger* object_)
-        : running(false)
-        , object(object_)
-    {
-
-    }
-
-    ~thread_loop()
-    {
-        if(thread.joinable())
-        {
-            thread.join();
-        }
-    }
-
-    void start()
-    {
-        running = true;
-        thread = std::thread(&thread_loop::loop, this, std::ref(object));
-    }
-
-    void stop()
-    {
-        running = false;    
-    }
-
-    void loop(std::atomic<cpf::logs::logger*>& object_)
-    {
-        while(running)
-        {
-        }
-    }
-
-private:
-    std::atomic<bool> running;
-    std::atomic<cpf::logs::logger*> object;
-    std::thread thread;
-};
-
-// --------------------------------------------------------------- //
+#include <boost/version.hpp>
 
 int main(/*int argc, char** argv*/) 
 {
@@ -72,21 +27,24 @@ int main(/*int argc, char** argv*/)
     std::cout << "MAIN THREAD: "<< std::this_thread::get_id() << '\n';
 
 
-    // test thread  ---------------------------------------------- //
+    // // test thread  ---------------------------------------------- //
+    namespace fs = std::filesystem;
+    
     cpf::logs::logger_config config;
-    config.base_dir = "./build/logs";
+    config.base_dir = fs::absolute("build/logs");
+    config.append = true;
+    config.days_to_keep = 5;
 
     cpf::logs::logger logger(config);
     logger.block_log_type(cpf::logs::log_type::hint);
-
-    thread_loop loop(&logger);
-    loop.start();
 
 
     // test threaded loop ---------------------------------------- //
     std::atomic<bool> program_active = true;
     std::thread user_input([&] 
     {
+        std::cout << "MAIN LOOP: "<< std::this_thread::get_id() << '\n';
+
         // using namespace std::chrono_literals;
         // std::this_thread::sleep_for(1s); // 0.05s
 
@@ -98,7 +56,7 @@ int main(/*int argc, char** argv*/)
             if(str == "stop")
             {
                 program_active = false;
-                loop.stop();
+                // loop.stop();
             }
             else if(str == "clear")
             {

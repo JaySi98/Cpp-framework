@@ -22,6 +22,6 @@ namespace cpf::logs
 
         bool append = true;     // logger will not create new file
                                 // but will continue to write to the newest in the folder
-        int files_to_keep = 10; // number of log files to be kept
+        int days_to_keep = 10;  // number of newest logged days directories to be kept
     };
 }

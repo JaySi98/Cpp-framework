@@ -29,4 +29,15 @@ namespace cpf::logs
         int thread_id
     ) : file(file_), function(function_), line(line_), type(type_), thread(thread_id), message() 
     {}   
+
+    std::ostream& operator<<(std::ostream& os, const log_data& data)
+    {
+        os << log_type_literal(data.type) << " | " 
+            << data.file.filename().string() << " - " 
+            << data.function << " - " 
+            << data.line << " | " 
+            << data.message.str();
+
+        return os;
+    }
 };

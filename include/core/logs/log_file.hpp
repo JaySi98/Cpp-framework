@@ -29,9 +29,7 @@ namespace cpf::logs
         ~log_file();
 
         void write_log(const std::ostringstream& entry);
-        void close_file();
-        void open_file(const std::filesystem::path& file_name);
-
+            
     private:
         void manage_files(const logger_config& config_);
 

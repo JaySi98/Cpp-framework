@@ -31,12 +31,7 @@ namespace cpf::logs
     std::ostringstream logger::create_log_entry(const log_data& data)
     {
         std::ostringstream entry{};
-        entry << utility::current_time_as_str(time_format) << " | " 
-            << log_type_literal(data.type) << " | " 
-            << data.file.filename().string() << " - " 
-            << data.function << " - " 
-            << data.line << " | " 
-            << data.message.str();
+        entry << utility::current_time_as_str(time_format) << " | "  << data;
         return entry;
     }
 }

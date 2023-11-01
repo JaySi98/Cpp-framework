@@ -40,6 +40,8 @@ namespace cpf::logs
             int thread_id
         );
     
+        friend std::ostream& operator<<(std::ostream& os, const log_data& data);
+
         std::filesystem::path file{};
         std::string function{};
         int line;
