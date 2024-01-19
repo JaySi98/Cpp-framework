@@ -10,6 +10,9 @@ set(HEADERS
     include/core/utility/weak_function.hpp
     include/core/utility/time.hpp
     include/core/utility/type_literal_map.hpp
+
+    include/core/thread/thread.hpp
+    include/core/thread/event_loop.hpp
 )
 
 set(SOURCES
@@ -20,6 +23,9 @@ set(SOURCES
     src/core/logs/log_file.cpp
 
     src/core/utility/time.cpp
+
+    src/core/thread/thread.cpp
+    src/core/thread/event_loop.cpp
 )
 
 set(EXE_SOURCES
